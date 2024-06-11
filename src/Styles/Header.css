@@ -1,0 +1,20 @@
+button{
+  background-color: black;
+  color: white;
+ cursor: pointer;
+ 
+}
+button:hover{
+  background-color: #fff;
+  color: black;
+}
+
+.rounded{
+  border-radius: 28px;
+  width: 5rem;
+  height: 2rem;
+}
+.linked{
+  text-decoration: none;
+  color: rgb(80, 77, 77);
+}
