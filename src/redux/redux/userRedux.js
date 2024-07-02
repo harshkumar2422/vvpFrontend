@@ -1,6 +1,12 @@
 import { createReducer } from "@reduxjs/toolkit";
 
-export const userReducer = createReducer({}, (builder) => {
+const initialState = {
+  users: [],
+  loading: false,
+  error: null,
+  message: null,
+};
+export const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase("loginRequest", (state) => {
       state.loading = true;
@@ -41,7 +47,7 @@ export const userReducer = createReducer({}, (builder) => {
       state.loading = true;
       state.message = action.payload;
     })
-        .addCase("loadUserRequest", (state) => {
+    .addCase("loadUserRequest", (state) => {
       state.loading = true;
     })
     .addCase("loadUserSuccess", (state, action) => {
@@ -169,6 +175,28 @@ export const userReducer = createReducer({}, (builder) => {
       state.user = action.payload;
     })
     .addCase("updateUserRoleFail", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("searchRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("searchSuccess", (state, action) => {
+      state.loading = false;
+      state.users = action.payload;
+    })
+    .addCase("searchFail", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+    .addCase("getSingleUSer", (state) => {
+      state.loading = true;
+    })
+    .addCase("singleUserSuccess", (state, action) => {
+      state.loading = false;
+      state.users = action.payload;
+    })
+    .addCase("getSingleUserFail", (state, action) => {
       state.loading = false;
       state.error = action.payload;
     })

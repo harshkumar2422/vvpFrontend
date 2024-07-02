@@ -8,7 +8,7 @@ export const login = (email, password, type) => async (dispatch) => {
 
     const { data } = await axios.post(
       `${server}/login`,
-      { email, password, type },
+      { email, password },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -34,16 +34,16 @@ export const login = (email, password, type) => async (dispatch) => {
 };
 
 export const loadUser = () => async (dispatch) => {
-  try {
-    dispatch({ type: "loadUserRequest" });
-    const { data } = await axios.get(`${server}/me`, {
-      withCredentials: true,
-    });
-    dispatch({ type: "loadUserSuccess", payload: data.user });
-    console.log(data, "lalalal");
-  } catch (error) {
-    dispatch({ type: "loadUserFail", payload: error.response.data.message });
-  }
+  // try {
+  //   dispatch({ type: "loadUserRequest" });
+  //   const { data } = await axios.get(`${server}/me`, {
+  //     withCredentials: true,
+  //   });
+  //   dispatch({ type: "loadUserSuccess", payload: data.user });
+  //   console.log(data, "lalalal");
+  // } catch (error) {
+  //   dispatch({ type: "loadUserFail", payload: error.response.data.message });
+  // }
 };
 
 
@@ -58,13 +58,13 @@ export const logout = () => (dispatch) => {
   }
 };
 
-export const getAllUser = () => async (dispatch) => {
+export const getAllUser = (query) => async (dispatch) => {
   try {
     dispatch({ type: 'getAllUserRequest' });
     
     const token = getAuthToken();
     
-    const { data } = await axios.get(`${server}/admin/getallUser`, {
+    const { data } = await axios.get(`${server}/admin/getallUser/query=${query}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -343,3 +343,43 @@ export const deleteMyDoc = ( DocId) => async (dispatch) => {
     
   }
 };
+export const searchUser = (query) => async (dispatch) => {
+  try {
+    dispatch({ type: "searchRequest" });
+    const token = getAuthToken();
+    const { data } = await axios.get(`${server}/search?query=${query}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    console.log(data.users);
+    dispatch({ type: "searchSuccess", payload: data.users });
+  } catch (error) {
+    dispatch({
+      type: "searchFail",
+      payload: error.response.data.message,
+    });
+  }
+};
+
+
+export const singleuser = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: "getSingleUSer" });
+    const token = getAuthToken();
+    const { data } = await axios.get(`${server}/getsingleuser/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+    console.log(data.users)
+    dispatch({ type: "singleUserSuccess", payload: data.users });
+
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: "getSingleUserFail",
+      payload: error.response.data.message,
+    });
+  }
+}
