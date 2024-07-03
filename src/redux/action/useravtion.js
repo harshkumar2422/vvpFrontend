@@ -2,33 +2,33 @@ import toast from "react-hot-toast";
 import { server } from "../store";
 import axios from "axios";
 import { getAuthToken } from "../../utils/auth";
-export const login = (email, password, type) => async (dispatch) => {
+export const login = (email, password) => async (dispatch) => {
   try {
-    dispatch({ type: 'loginRequest' });
+    dispatch({ type: "loginRequest" });
 
     const { data } = await axios.post(
       `${server}/login`,
       { email, password },
       {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         withCredentials: true,
       }
     );
 
-    localStorage.setItem('authToken', data.token); // Store token in localStorage
+    localStorage.setItem("authToken", data.token); // Store token in localStorage
     setTimeout(() => {
       localStorage.removeItem("resetEmail"); // Remove email from localStorage after 20 minutes
     }, 30 * 60 * 1000);
 
-    dispatch({ type: 'loginSuccess', payload: data });
+    dispatch({ type: "loginSuccess", payload: data });
     console.log(data);
     toast.success(data.message);
   } catch (error) {
-    dispatch({ type: 'loginFail', payload: error.response.data.message });
+    dispatch({ type: "loginFail", payload: error.response.data.message });
     toast.error(
-      error.response.data.message || 'Login failed. Please try again.'
+      error.response.data.message || "Login failed. Please try again."
     );
   }
 };
@@ -46,38 +46,40 @@ export const loadUser = () => async (dispatch) => {
   // }
 };
 
-
 export const logout = () => (dispatch) => {
   try {
-    localStorage.removeItem('authToken'); // Clear token from localStorage
-    dispatch({ type: 'logoutSuccess' });
+    localStorage.removeItem("authToken"); // Clear token from localStorage
+    dispatch({ type: "logoutSuccess" });
     toast.success("Logged Out Successfully");
   } catch (error) {
-    dispatch({ type: 'logoutFail', payload: error.message });
+    dispatch({ type: "logoutFail", payload: error.message });
     toast.error("Logout failed. Please try again.");
   }
 };
 
 export const getAllUser = (query) => async (dispatch) => {
   try {
-    dispatch({ type: 'getAllUserRequest' });
-    
+    dispatch({ type: "getAllUserRequest" });
+
     const token = getAuthToken();
-    
-    const { data } = await axios.get(`${server}/admin/getallUser/query=${query}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-      withCredentials: true,
-    });
+
+    const { data } = await axios.get(
+      `${server}/admin/getallUser/query=${query}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
+      }
+    );
 
     console.log(data);
-    dispatch({ type: 'getAllUserSuccess', payload: data.user });
+    dispatch({ type: "getAllUserSuccess", payload: data.user });
     toast.success(data.message);
   } catch (error) {
     console.log(error);
     dispatch({
-      type: 'getAllUserFail',
+      type: "getAllUserFail",
       payload: error.response.data.message,
     });
   }
@@ -90,7 +92,7 @@ export const deleteUSer = (id) => async (dispatch) => {
 
     const { data } = await axios.delete(`${server}/deleteUser/${id}`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     console.log(data);
@@ -121,7 +123,7 @@ export const register = (name, email, password, type) => async (dispatch) => {
         withCredentials: true,
       }
     );
-    localStorage.setItem('authToken', data.token); // Store token in localStorage
+    localStorage.setItem("authToken", data.token); // Store token in localStorage
     setTimeout(() => {
       localStorage.removeItem("resetEmail"); // Remove email from localStorage after 20 minutes
     }, 20 * 60 * 1000);
@@ -135,16 +137,16 @@ export const register = (name, email, password, type) => async (dispatch) => {
 export const uploadDocs = (formData) => async (dispatch) => {
   try {
     dispatch({ type: "uploadDocsRequest" });
-    const token = getAuthToken()
+    const token = getAuthToken();
     const { data } = await axios.post(`${server}/admin/uploaddocs`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        'Authorization': `Bearer ${token}`,
-
-      }    });
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log(data);
     dispatch({ type: "uploadDocsSuccess", payload: data.message });
-    toast.success(data.message)
+    toast.success(data.message);
   } catch (error) {
     console.log(error);
     dispatch({
@@ -157,13 +159,13 @@ export const uploadDocs = (formData) => async (dispatch) => {
 export const deleteSingleDoc = (UserId, DocId) => async (dispatch) => {
   try {
     dispatch({ type: "deleteDocRequest" });
-    const token = getAuthToken()
+    const token = getAuthToken();
     const { data } = await axios.delete(
       `${server}/deleteDoc?userId=${UserId}&docsId=${DocId}`,
       {
         headers: {
-          'Authorization': `Bearer ${token}`,
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     console.log(data);
@@ -182,11 +184,11 @@ export const getAllCompany =
   async (dispatch) => {
     try {
       dispatch({ type: "getAllCompanyRequest" });
-      const token = getAuthToken()
+      const token = getAuthToken();
       const { data } = await axios.get(
-        `${server}/admin/getallcompany?keyword=${keyword}&email=${email}`, {
-          'Authorization': `Bearer ${token}`,
-
+        `${server}/admin/getallcompany?keyword=${keyword}&email=${email}`,
+        {
+          Authorization: `Bearer ${token}`,
         }
       );
       console.log(data.user);
@@ -202,11 +204,11 @@ export const getAllCompany =
 export const deleteSingleDocCompany = (UserId, DocId) => async (dispatch) => {
   try {
     dispatch({ type: "deleteCompanyDocRequest" });
-    const token = getAuthToken()
+    const token = getAuthToken();
     const { data } = await axios.delete(
       `${server}/deleteDoc?userId=${UserId}&docsId=${DocId}`,
       {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       }
     );
     console.log(data);
@@ -276,14 +278,13 @@ export const resetPassword =
 export const updateRole = (id) => async (dispatch) => {
   try {
     dispatch({ type: "updateUserRoleRequest" });
-    const token = getAuthToken()
+    const token = getAuthToken();
     const { data } = await axios.put(
       `${server}/role/${id}`,
-      {}, {
-        'Authorization': `Bearer ${token}`,
-
+      {},
+      {
+        Authorization: `Bearer ${token}`,
       }
-   
     );
     dispatch({ type: "updateUserRoleSuccess", payload: data.message });
     console.log("id", id);
@@ -296,20 +297,19 @@ export const updateRole = (id) => async (dispatch) => {
   }
 };
 
-
 export const uploadmyDocs = (formData) => async (dispatch) => {
   try {
     dispatch({ type: "uploadmyDocsRequest" });
-    const token = getAuthToken()
+    const token = getAuthToken();
     const { data } = await axios.post(`${server}/upload `, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        'Authorization': `Bearer ${token}`,
-
-      }    });
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log(data);
     dispatch({ type: "uploadmyDocsSuccess", payload: data.message });
-    toast.success(data.message)
+    toast.success(data.message);
   } catch (error) {
     console.log(error);
     dispatch({
@@ -319,28 +319,27 @@ export const uploadmyDocs = (formData) => async (dispatch) => {
   }
 };
 
-export const deleteMyDoc = ( DocId) => async (dispatch) => {
+export const deleteMyDoc = (DocId) => async (dispatch) => {
   try {
     dispatch({ type: "deleteMyDocRequest" });
-    const token = getAuthToken()
+    const token = getAuthToken();
     const { data } = await axios.delete(
       `${server}/deletemyDoc?docsId=${DocId}`,
       {
         headers: {
-          'Authorization': `Bearer ${token}`,
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
     console.log(data);
     dispatch({ type: "deleteMyDocSuccess", payload: data.message });
-    toast.success(data.message)
+    toast.success(data.message);
   } catch (error) {
     console.log(error);
     dispatch({
       type: "deleteMyDocFail",
       payload: error.response.data.message,
     });
-    
   }
 };
 export const searchUser = (query) => async (dispatch) => {
@@ -349,7 +348,7 @@ export const searchUser = (query) => async (dispatch) => {
     const token = getAuthToken();
     const { data } = await axios.get(`${server}/search?query=${query}`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     console.log(data.users);
@@ -362,19 +361,17 @@ export const searchUser = (query) => async (dispatch) => {
   }
 };
 
-
 export const singleuser = (id) => async (dispatch) => {
   try {
     dispatch({ type: "getSingleUSer" });
     const token = getAuthToken();
     const { data } = await axios.get(`${server}/getsingleuser/${id}`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
-    console.log(data.users)
+    console.log(data.users);
     dispatch({ type: "singleUserSuccess", payload: data.users });
-
   } catch (error) {
     console.log(error);
     dispatch({
@@ -382,4 +379,27 @@ export const singleuser = (id) => async (dispatch) => {
       payload: error.response.data.message,
     });
   }
-}
+};
+
+export const RegisterCompany = (formData) => async (dispatch) => {
+  try {
+    dispatch({ type: "RegisterCompanyRequest" });
+    const token = getAuthToken();
+    const { data } = await axios.post(`${server}/registerCompany`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(data);
+    dispatch({ type: "RegisterCompanySuccess", payload: data.message });
+    toast.success(data.message)
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: "RegisterCompanyFail",
+      payload: error.response.data.message,
+    });
+  }
+};
+

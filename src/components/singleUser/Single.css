@@ -7,7 +7,7 @@
   background-repeat: no-repeat;
   overflow: auto; /* Allow vertical scrolling */
 }
-.to{
+.to {
   position: relative;
   top: 10px;
   left: 3px;
@@ -15,18 +15,18 @@
   cursor: pointer;
 }
 
-.company{
+.company {
   /* border: 2px solid red; */
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
-.company img{
+.company img {
   width: 4rem;
   border-radius: 50%;
 }
-.to:hover{
+.to:hover {
   background-color: rgb(90, 38, 203);
 }
 
@@ -37,21 +37,24 @@
   overflow-x: hidden; /* Hide horizontal scroll */
 }
 
-.directors, .nominees {
+.directors,
+.nominees {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
   overflow-x: auto; /* Allow horizontal scrolling */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
   padding: 1rem 0;
 }
 
-.directors::-webkit-scrollbar, .nominees::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
+.directors::-webkit-scrollbar,
+.nominees::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 
-.directors .card, .nominees .card {
+.directors .card,
+.nominees .card {
   flex: 0 0 auto;
   margin-right: 1rem;
 }
@@ -72,13 +75,13 @@
   border-radius: 15px;
 }
 
-.adds{
-border-radius: 15px;
-background-color: rgba(255, 255, 255, 0.6);
+.adds {
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.6);
 
-width: 4rem;
+  width: 4rem;
 }
-.adds:hover{
+.adds:hover {
   background-color: rgb(90, 38, 203);
 }
 .preview:hover {
@@ -103,16 +106,15 @@ width: 4rem;
   display: flex;
   justify-content: center;
 }
-.some{
+.some {
   /* background-color: rgba(255, 255, 255, 0.4); */
-
 }
 .cardal img {
   width: 100%;
 }
 
 .card {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .docs {
@@ -120,12 +122,12 @@ width: 4rem;
   justify-content: center;
   align-items: center;
   overflow-x: auto;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .docs::-webkit-scrollbar {
-  display: none;  /* Safari and Chrome */
+  display: none; /* Safari and Chrome */
 }
 
 .mid {
@@ -157,7 +159,11 @@ hr {
 
 .contract {
   padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 13px;
 }
+
+
 .add {
   /* position: absolute; */
   top: 17rem;
@@ -174,13 +180,47 @@ hr {
   display: flex;
   justify-content: center;
 }
+.payments{
+  padding: 3rem;
+}
+.space {
+  margin-top: 2rem;
+}
+.each{
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 13px;
+  padding: 2rem;
+  margin: 13px;
+
+}
+.workorder{
+  padding: 3rem;
+}
+.grouuup{
+  display: flex;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 13px;
+  padding: 2rem;
+  margin: 13px;
+flex-direction: column;
+align-items: center;
+  }
+.order{
+  display: flex;
+margin-top: 2rem;
+
+  /* flex-direction: column; */
+}
+
 
 @media only screen and (max-width: 768px) {
   .up {
     padding: 1rem;
   }
 
-  .directors, .nominees {
+  .directors,
+  .nominees {
     margin: 0.5rem;
   }
 
@@ -210,7 +250,8 @@ hr {
     padding: 0.5rem;
   }
 
-  .directors, .nominees {
+  .directors,
+  .nominees {
     margin: 0.2rem;
   }
 

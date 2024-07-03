@@ -53,9 +53,9 @@ const Profile = () => {
         <div className="usercards">
           {users.map((user) => (
             <div
-            key={user._id}
-            className="cards"
-            onClick={(e) => handleUserClick(user._id, e)}
+              key={user._id}
+              className="cards"
+              onClick={(e) => handleUserClick(user._id, e)}
             >
               <div className="cardetails">
                 <h2>{user.name}</h2>

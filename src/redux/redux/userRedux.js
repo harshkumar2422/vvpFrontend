@@ -189,6 +189,17 @@ export const userReducer = createReducer(initialState, (builder) => {
       state.loading = false;
       state.error = action.payload;
     })
+    .addCase("RegisterCompanyRequest", (state) => {
+      state.loading = true;
+    })
+    .addCase("RegisterCompanySuccess", (state, action) => {
+      state.loading = false;
+      state.users = action.payload;
+    })
+    .addCase("RegisterCompanyFail", (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
     .addCase("getSingleUSer", (state) => {
       state.loading = true;
     })
